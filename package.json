@@ -6,7 +6,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "test": "vitest",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "postinstall": "npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices"
   },
   "dependencies": {
     "@astrojs/node": "^9.5.2",
