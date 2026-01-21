@@ -1,4 +1,9 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import styles from './ImageGenerator.module.css';
+
+function cx(...classes: (string | false | undefined | null)[]): string {
+  return classes.filter(Boolean).join(' ');
+}
 
 export default function ImageGenerator() {
   const [apiKey, setApiKey] = useState('');
@@ -216,11 +221,11 @@ export default function ImageGenerator() {
   }, []);
 
   return (
-    <div className="container">
-      <div className="main-content">
-        <header className="header">
-          <h1>FLUX.2 <span className="klein">[klein]</span></h1>
-          <p className="tagline">
+    <div className={styles.container}>
+      <div className={styles.mainContent}>
+        <header className={styles.header}>
+          <h1>FLUX.2 <span className={styles.klein}>[klein]</span></h1>
+          <p className={styles.tagline}>
             Ultra-fast image generation by{' '}
             <a href="https://blackforestlabs.ai" target="_blank" rel="noreferrer">
               Black Forest Labs
@@ -228,22 +233,22 @@ export default function ImageGenerator() {
           </p>
         </header>
 
-        <div className="settings-row">
-          <div className="api-key-container">
+        <div className={styles.settingsRow}>
+          <div className={styles.apiKeyContainer}>
             <input
               type="text"
               placeholder="Enter your BFL API key"
               value={apiKey}
               onChange={(e) => handleApiKeyChange(e.target.value)}
             />
-            <p className="api-key-hint">
+            <p className={styles.apiKeyHint}>
               Don't have a key?{' '}
               <a href="https://dashboard.bfl.ai/get-started" target="_blank" rel="noreferrer">
                 Get started here
               </a>
             </p>
           </div>
-          <div className="model-select">
+          <div className={styles.modelSelect}>
             <label htmlFor="modelVariant">Model variant:</label>
             <select
               id="modelVariant"
@@ -257,18 +262,22 @@ export default function ImageGenerator() {
         </div>
 
         <div
-          className={`image-container${isDragOver ? ' drag-over' : ''}`}
+          className={cx(styles.imageContainer, isDragOver && styles.dragOver)}
           onDragEnter={handleDragEnter}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <div className={`drop-overlay${isDragOver ? ' visible' : ''}`}>
+          <div className={cx(styles.dropOverlay, isDragOver && styles.visible)}>
             Drop image here
           </div>
-          <div className={`loading-overlay${showLoading ? ' visible' : ''}${loadingComplete ? ' complete' : ''}`}>
-            <div className="spinner" />
-            <svg className="check-icon" width="48" height="48" viewBox="0 0 24 24" fill="none">
+          <div className={cx(
+            styles.loadingOverlay,
+            showLoading && styles.visible,
+            loadingComplete && styles.complete
+          )}>
+            <div className={styles.spinner} />
+            <svg className={styles.checkIcon} width="48" height="48" viewBox="0 0 24 24" fill="none">
               <path
                 d="M4 12.5L9 17.5L20 6.5"
                 stroke="currentColor"
@@ -279,35 +288,47 @@ export default function ImageGenerator() {
             </svg>
           </div>
           {previousImageUrl && (
-            <img src={previousImageUrl} className="generated-image previous" alt="" />
+            <img
+              src={previousImageUrl}
+              className={cx(styles.generatedImage, styles.previous)}
+              alt=""
+            />
           )}
           {currentImageUrl && (
             <img
               src={currentImageUrl}
-              className={`generated-image current${showCurrentImage ? ' show' : ''}`}
+              className={cx(
+                styles.generatedImage,
+                styles.current,
+                showCurrentImage && styles.show
+              )}
               alt=""
             />
           )}
           {!hasImage && (
-            <div className="placeholder">
+            <div className={styles.placeholder}>
               <p>Enter a prompt below to generate an image</p>
-              <p className="hint">Or drag & drop a reference image</p>
+              <p className={styles.placeholderHint}>Or drag & drop a reference image</p>
             </div>
           )}
         </div>
 
-        <div className={`edit-mode-toggle${hasImage ? '' : ' disabled'}`}>
+        <div className={cx(styles.editModeToggle, !hasImage && styles.disabled)}>
           <div
-            className={`toggle-switch${editMode ? ' active' : ''}${hasImage ? '' : ' disabled'}`}
+            className={cx(
+              styles.toggleSwitch,
+              editMode && styles.active,
+              !hasImage && styles.disabled
+            )}
             onClick={() => hasImage && setEditMode(!editMode)}
           />
-          <span className="toggle-label">Edit mode</span>
-          <span className="toggle-description">
+          <span className={styles.toggleLabel}>Edit mode</span>
+          <span className={styles.toggleDescription}>
             — Use the current image as a reference for the next generation
           </span>
         </div>
 
-        <div className="prompt-container">
+        <div className={styles.promptContainer}>
           <input
             type="text"
             placeholder="Describe an image..."
@@ -316,7 +337,7 @@ export default function ImageGenerator() {
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
           />
-          <span className="gen-time">{genTime}</span>
+          <span className={styles.genTime}>{genTime}</span>
         </div>
       </div>
     </div>

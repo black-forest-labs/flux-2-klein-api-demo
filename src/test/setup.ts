@@ -2,6 +2,15 @@ import { afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 
+// Mock CSS modules to return class names as-is
+vi.mock('../components/ImageGenerator.module.css', () => {
+  return {
+    default: new Proxy({}, {
+      get: (_, prop) => String(prop),
+    }),
+  };
+});
+
 // Cleanup after each test
 afterEach(() => {
   cleanup();

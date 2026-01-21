@@ -226,7 +226,7 @@ describe('ImageGenerator Component', () => {
 
       // Loading overlay should be visible
       await waitFor(() => {
-        const overlay = document.querySelector('.loading-overlay');
+        const overlay = document.querySelector('.loadingOverlay');
         expect(overlay).toHaveClass('visible');
       });
 
@@ -259,7 +259,7 @@ describe('ImageGenerator Component', () => {
 
       // Timer should start at 0.0s
       await waitFor(() => {
-        const genTime = document.querySelector('.gen-time');
+        const genTime = document.querySelector('.genTime');
         expect(genTime?.textContent).toMatch(/\d+\.\d+s/);
       });
 
@@ -345,7 +345,7 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const img = document.querySelector('.generated-image.current');
+        const img = document.querySelector('.generatedImage.current');
         expect(img).toHaveAttribute('src', 'https://example.com/image.png');
       });
     });
@@ -397,11 +397,11 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const toggleSwitch = document.querySelector('.toggle-switch');
+        const toggleSwitch = document.querySelector('.toggleSwitch');
         expect(toggleSwitch).not.toHaveClass('disabled');
       });
 
-      const toggleSwitch = document.querySelector('.toggle-switch')!;
+      const toggleSwitch = document.querySelector('.toggleSwitch')!;
       await user.click(toggleSwitch);
 
       expect(toggleSwitch).toHaveClass('active');
@@ -411,7 +411,7 @@ describe('ImageGenerator Component', () => {
       const user = userEvent.setup();
       render(<ImageGenerator />);
 
-      const toggleSwitch = document.querySelector('.toggle-switch')!;
+      const toggleSwitch = document.querySelector('.toggleSwitch')!;
       await user.click(toggleSwitch);
 
       expect(toggleSwitch).not.toHaveClass('active');
@@ -435,12 +435,12 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const toggleSwitch = document.querySelector('.toggle-switch');
+        const toggleSwitch = document.querySelector('.toggleSwitch');
         expect(toggleSwitch).not.toHaveClass('disabled');
       });
 
       // Enable edit mode
-      const toggleSwitch = document.querySelector('.toggle-switch')!;
+      const toggleSwitch = document.querySelector('.toggleSwitch')!;
       await user.click(toggleSwitch);
 
       // Second generation with edit mode
@@ -504,7 +504,7 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const genTime = document.querySelector('.gen-time');
+        const genTime = document.querySelector('.genTime');
         expect(genTime?.textContent).toBe('');
       });
     });
@@ -527,7 +527,7 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const overlay = document.querySelector('.loading-overlay');
+        const overlay = document.querySelector('.loadingOverlay');
         expect(overlay).not.toHaveClass('visible');
       });
     });
@@ -571,14 +571,14 @@ describe('ImageGenerator Component', () => {
     it('shows drop overlay on drag enter', async () => {
       render(<ImageGenerator />);
 
-      const imageContainer = document.querySelector('.image-container')!;
+      const imageContainer = document.querySelector('.imageContainer')!;
 
       fireEvent.dragEnter(imageContainer, {
         dataTransfer: { files: [] },
       });
 
       await waitFor(() => {
-        const dropOverlay = document.querySelector('.drop-overlay');
+        const dropOverlay = document.querySelector('.dropOverlay');
         expect(dropOverlay).toHaveClass('visible');
       });
     });
@@ -586,7 +586,7 @@ describe('ImageGenerator Component', () => {
     it('hides drop overlay on drag leave', async () => {
       render(<ImageGenerator />);
 
-      const imageContainer = document.querySelector('.image-container')!;
+      const imageContainer = document.querySelector('.imageContainer')!;
 
       fireEvent.dragEnter(imageContainer, {
         dataTransfer: { files: [] },
@@ -597,27 +597,27 @@ describe('ImageGenerator Component', () => {
       });
 
       await waitFor(() => {
-        const dropOverlay = document.querySelector('.drop-overlay');
+        const dropOverlay = document.querySelector('.dropOverlay');
         expect(dropOverlay).not.toHaveClass('visible');
       });
     });
 
-    it('adds drag-over class to container on drag enter', () => {
+    it('adds dragOver class to container on drag enter', () => {
       render(<ImageGenerator />);
 
-      const imageContainer = document.querySelector('.image-container')!;
+      const imageContainer = document.querySelector('.imageContainer')!;
 
       fireEvent.dragEnter(imageContainer, {
         dataTransfer: { files: [] },
       });
 
-      expect(imageContainer).toHaveClass('drag-over');
+      expect(imageContainer).toHaveClass('dragOver');
     });
 
     it('ignores non-image files', () => {
       render(<ImageGenerator />);
 
-      const imageContainer = document.querySelector('.image-container')!;
+      const imageContainer = document.querySelector('.imageContainer')!;
 
       const file = new File(['test'], 'test.txt', { type: 'text/plain' });
 
@@ -649,7 +649,7 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const currentImg = document.querySelector('.generated-image.current');
+        const currentImg = document.querySelector('.generatedImage.current');
         expect(currentImg).toHaveAttribute('src', 'https://example.com/first.png');
       });
 
@@ -664,10 +664,10 @@ describe('ImageGenerator Component', () => {
       await user.keyboard('{Enter}');
 
       await waitFor(() => {
-        const previousImg = document.querySelector('.generated-image.previous');
+        const previousImg = document.querySelector('.generatedImage.previous');
         expect(previousImg).toHaveAttribute('src', 'https://example.com/first.png');
 
-        const currentImg = document.querySelector('.generated-image.current');
+        const currentImg = document.querySelector('.generatedImage.current');
         expect(currentImg).toHaveAttribute('src', 'https://example.com/second.png');
       });
     });
