@@ -27,9 +27,11 @@ dist/
 
 # AI assistants
 .agent/
+.agents/
 .claude/
 .cursor/
 .gemini/
+skills-lock.json
 
 # Debug
 npm-debug.log*
